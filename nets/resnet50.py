@@ -7,7 +7,6 @@ from tensorflow.keras.models import Model
 
 
 def identity_block(input_tensor, kernel_size, filters, stage, block):
-
     filters1, filters2, filters3 = filters
 
     conv_name_base = 'res' + str(stage) + block + '_branch'
@@ -19,10 +18,10 @@ def identity_block(input_tensor, kernel_size, filters, stage, block):
     x = Activation('relu')(x)
 
     # 3x3卷积
-    x = Conv2D(filters2, kernel_size,padding='same', name=conv_name_base + '2b')(x)
+    x = Conv2D(filters2, kernel_size, padding='same', name=conv_name_base + '2b')(x)
     x = BatchNormalization(name=bn_name_base + '2b')(x)
     x = Activation('relu')(x)
-    
+
     # 上升通道数
     x = Conv2D(filters3, (1, 1), name=conv_name_base + '2c')(x)
     x = BatchNormalization(name=bn_name_base + '2c')(x)
@@ -62,7 +61,7 @@ def conv_block(input_tensor, kernel_size, filters, stage, block, strides=(2, 2))
     return x
 
 
-def ResNet50(input_shape=[224,224,3], classes=1000):
+def ResNet50(input_shape=[224, 224, 3], classes=1000):
     img_input = Input(shape=input_shape)
 
     x = ZeroPadding2D((3, 3))(img_input)
